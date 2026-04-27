@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblegames",
+  "version": "${version}",
+  "name": "CobbleGames",
+  "description": "Sistema modular de minijuegos dinámicos para servidores con Cobblemon.",
+  "authors": ["CobbleGames Team"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.cobblegames.core.CobbleGames"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  },
+  "suggests": {
+    "cobblemon": "*"
+  }
+}

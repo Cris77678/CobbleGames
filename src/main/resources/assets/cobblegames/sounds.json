@@ -1,0 +1,66 @@
+{
+  "minigame.music.coin_collector": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/coin_collector",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.freeze_tag": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/freeze_tag",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.hot_potato": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/hot_potato",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.king_of_hill": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/king_of_hill",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.red_light": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/red_light",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.race": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/race",
+        "stream": true
+      }
+    ]
+  },
+  "minigame.music.countdown": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/countdown",
+        "stream": false
+      }
+    ]
+  },
+  "minigame.music.victory": {
+    "sounds": [
+      {
+        "name": "cobblegames:minigame/music/victory",
+        "stream": false
+      }
+    ]
+  }
+}

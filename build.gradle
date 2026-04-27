@@ -1,0 +1,88 @@
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group   = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+// ─── Repositorios ─────────────────────────────────────────────────────────────
+repositories {
+    maven { url 'https://maven.fabricmc.net/' }
+    // Cobblemon / ImpactDev (necesario para cobblemon_version)
+    maven { url 'https://maven.impactdev.net/repository/development/' }
+    mavenCentral()
+}
+
+// ─── Loom (sin splitEnvironmentSourceSets ni dataGen — ambos causan errores
+//     en mods server-side que no tienen código de cliente separado) ─────────────
+loom {
+    // Sin splitEnvironmentSourceSets(): todo el código va en main.
+    // Si en el futuro añades mixins de cliente, actívalo.
+}
+
+// ─── Dependencias ─────────────────────────────────────────────────────────────
+dependencies {
+    // Minecraft + mappings
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings  "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+    // Fabric Loader (runtime + compile)
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    // Fabric API completa
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Cobblemon — solo API de compilación (el servidor lo provee en runtime)
+    // modCompileOnly impide que se incluya en el jar final
+    modCompileOnly "com.cobblemon:fabric:${project.cobblemon_version}"
+}
+
+// ─── Procesado de recursos ────────────────────────────────────────────────────
+processResources {
+    inputs.property 'version', project.version
+    filteringCharset 'UTF-8'
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+// ─── Java ─────────────────────────────────────────────────────────────────────
+java {
+    // Minecraft 1.21.1 requiere Java 21
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    // Genera un sources jar automáticamente con ./gradlew build
+    withSourcesJar()
+}
+
+// Añade la licencia al jar
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
+
+// Opciones de compilación: encoding UTF-8 y warnings útiles
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    // -parameters es necesario para que Brigadier resuelva argumentos por nombre
+    options.compilerArgs << '-parameters'
+}
+
+// ─── Publicación Maven (opcional — solo si quieres publicar en un repo local) ──
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        // maven { url 'https://tu-repo.com/releases' }
+    }
+}
